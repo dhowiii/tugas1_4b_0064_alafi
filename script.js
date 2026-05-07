@@ -1,28 +1,37 @@
-const inputValue =document.getElementById("inputTugas").value;
+const inputTask = document.getElementById("inputTask");
+const selectStatus = document.getElementById("selectStatus");
 const btnTambah = document.getElementById("btnTambahTodo");
 const daftarTugas = document.getElementById("listTugas");
 
-btnTambah.addEventListener("click", function() {
+btnTambah.addEventListener("click", function () {
+    const inputValue = inputTask.value.trim();
+    const statusValue = selectStatus.value;
 
+    if (inputValue === "") {
+        alert("Tugas tidak boleh kosong!");
+        return;
+    }
 
-        if(inputValue === "") {
-            alert("Tugas tidak boleh kosong!");
-           return;
+    const listbaru = document.createElement("li");
+    listbaru.classList.add("todo-item");
 
+    const span = document.createElement("span");
+    span.classList.add("todo-text");
+    span.textContent = `${inputValue} (${statusValue})`;
 
-        }
+    const btnHapus = document.createElement("button");
+    btnHapus.textContent = "Hapus";
+    btnHapus.classList.add("btn-hapus");
 
-        const listbaru = document.createElement("li");
-        const span = document.createElement("span");
-        span.innerHTML= inputValue.value;
+    btnHapus.addEventListener("click", function () {
+        const konfirmasi = confirm("Hapus data ini?" );
+        if (konfirmasi) listbaru.remove();
+    });
 
-        listbaru.appendChild(span);
-        daftarTugas.appendChild(listbaru);
+    listbaru.appendChild(span);
+    listbaru.appendChild(btnHapus);
+    daftarTugas.appendChild(listbaru);
 
-
-        inputValue.value = "";
-        inputValue.focus();
-        
-
-
+    inputTask.value = "";
+    inputTask.focus();
 });
